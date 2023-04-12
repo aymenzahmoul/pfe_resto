@@ -36,6 +36,7 @@ const Menuitems = [
     href: '/ui/typography',
   },
 
+
   {
     id: uniqueId(),
     title: 'Couriers',
@@ -52,7 +53,7 @@ const Menuitems = [
   },
   {
     id: uniqueId(),
-    title: 'Produits',
+    title: 'plats',
     icon: IconCommand,
     href: '/produits',
   },
@@ -81,6 +82,13 @@ const Menuitems = [
     title: 'Profil',
     icon: IconMoodHappy,
     href: '/profil',
+  },
+  {
+    id: uniqueId(),
+    title: 'category',
+    icon: IconUsers
+    ,
+    href: '/category',
   },
   {
     id: uniqueId(),

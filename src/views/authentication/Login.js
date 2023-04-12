@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Link } from 'react-router-dom';
 import { Grid, Box, Card, Stack, Typography } from '@mui/material';
 
@@ -8,7 +9,7 @@ import Logo from 'src/layouts/full/shared/logo/Logo';
 import AuthLogin from './auth/AuthLogin';
 
 const Login2 = () => {
-  
+
   return (
     <PageContainer title="Login" description="this is Login page">
       <Box

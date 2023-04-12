@@ -78,29 +78,7 @@ const ecoCard = [
     };
    
   return (
-    <DashboardCard title="Produits">
-        <Stack direction="row"  spacing={13}> 
-         <Paper
-      component="form"
-      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-    >
-    
-      <InputBase
-        sx={{ ml: 1, flex: 1 }}
-        placeholder="Search "
-        inputProps={{ 'aria-label': 'search google maps' }}
-      />
-      <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-        <SearchIcon />
-      </IconButton>
-   
-    
-    </Paper>
-    <Button variant="outlined" href="AddProduct" startIcon={<IconSquarePlus />}>
-        add product
-      </Button>
-      </Stack>
-    <br></br>
+    <DashboardCard title="Plats"> 
     <Grid container spacing={3}>
     {ecoCard.map((product, index) => (
         <Grid item sm={12} md={4} lg={3} key={index}>
