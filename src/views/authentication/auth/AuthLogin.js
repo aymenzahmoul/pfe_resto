@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
 
 const AuthLogin = ({ title, subtitle, subtext }) => (
+    
     <>
         {title ? (
             <Typography fontWeight="700" variant="h2" mb={1}>

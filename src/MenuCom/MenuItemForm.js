@@ -1,31 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import axios from 'axios';
 
 const MenuItemForm = ({ addItem }) => {
-  const [product, setProduct] = useState({
-    name: "",
-    price: "",
-    description: "",
+
+  const [meal, setMeal] = useState({
+    name: '',
+    price: '',
+    desc: '',
+    category_id: '',
+    category: []
   });
-  
-  const { name, price, description } = product;
-  
-  const onInputChange = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
+
+  useEffect(() => {
+    async function fetchCategories() {
+      const response = await axios.get('http://localhost:8080/public-resources/categories');
+      setMeal({ ...meal, category: response.data });
+      console.log(response)
+    }
+    fetchCategories();
+  }, []);
+
+  const handleChange = (e) => {
+    setMeal({ ...meal, [e.target.name]: e.target.value });
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:8080/products", product);
-    const item = { name, price, description };
+    const { name, price, desc, category_id } = meal;
+    await axios.post('http://localhost:8080/meal-configuration/plats', { name, price, desc, category_id });
+    setMeal({ ...meal, name: '', price: '', desc: '', category_id: '' });
+    const item = { name, price, desc };
     addItem(item);
-    setProduct({
+    setMeal({
       name: "",
       price: "",
-      description: "",
+      desc: "",
+
     });
   };
-  
+
+
   return (
     <div className="card mt-3">
       <div className="card-body">
@@ -39,8 +53,8 @@ const MenuItemForm = ({ addItem }) => {
               id="name"
               placeholder="Enter name"
               name="name"
-              value={name}
-              onChange={onInputChange}
+              value={meal.name}
+              onChange={handleChange}
             />
           </div>
           <div className="form-group">
@@ -51,19 +65,19 @@ const MenuItemForm = ({ addItem }) => {
               id="price"
               placeholder="Enter price"
               name="price"
-              value={price}
-              onChange={onInputChange}
+              value={meal.price}
+              onChange={handleChange}
             />
           </div>
           <div className="form-group">
             <label htmlFor="description">Description</label>
             <textarea
               className="form-control"
-              id="description"
+              id="desc"
               rows="3"
-              name="description"
-              value={description}
-              onChange={onInputChange}
+              name="desc"
+              value={meal.desc}
+              onChange={handleChange}
             ></textarea>
           </div>
           <button type="submit" className="btn btn-primary">
