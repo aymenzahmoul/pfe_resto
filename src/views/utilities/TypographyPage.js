@@ -41,47 +41,6 @@ const bull = (
 );
 
 
-
-const products = [
-    {
-        id: "1",
-        name: "Sunil Joshi",
-        post: "Web Designer",
-        pname: "Elite Admin",
-        priority: "Low",
-        pbg: "primary.main",
-        budget: "3.9",
-    },
-    {
-        id: "2",
-        name: "Andrew McDownland",
-        post: "Project Manager",
-        pname: "Real Homes WP Theme",
-        priority: "Medium",
-        pbg: "secondary.main",
-        budget: "24.5",
-    },
-    {
-        id: "3",
-        name: "Christopher Jamil",
-        post: "Project Manager",
-        pname: "MedicalPro WP Theme",
-        priority: "High",
-        pbg: "error.main",
-        budget: "12.8",
-    },
-    {
-        id: "4",
-        name: "Nirav Joshi",
-        post: "Frontend Engineer",
-        pname: "Hosting Press HTML",
-        priority: "Critical",
-        pbg: "success.main",
-        budget: "2.4",
-    },
-];
-
- 
   export default function TypographyPage() {
     const [users, setUsers] = useState([]);
 
@@ -92,12 +51,12 @@ const products = [
     }, []);
   
     const loadUsers = async () => {
-      const result = await axios.get("http://localhost:8080/user");
+      const result = await axios.get("http://localhost:8080/authentication-management/users/all");
       setUsers(result.data);
     };
   
     const deleteUser = async (id) => {
-      await axios.delete(`http://localhost:8080/user/${id}`);
+      await axios.delete(`http://localhost:8080/authentication-management/users/all/${id}`);
       loadUsers();
     };
     const [age, setAge] = React.useState('');
@@ -221,7 +180,7 @@ const products = [
                             >
                                 <Box>
                                     <Typography variant="subtitle2" fontWeight={600}>
-                                        {product.name}
+                                        {product.username}
                                     </Typography>
                                     <Typography
                                         color="textSecondary"
@@ -251,7 +210,7 @@ const products = [
                             ></Chip>
                         </TableCell>
                         <TableCell align="right">
-                            <Typography variant="h6">{product.budget}</Typography>
+                            <Typography variant="h6">{product.enabled.toString()}</Typography>
                         </TableCell>
                     </TableRow>
                 ))}

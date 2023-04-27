@@ -68,19 +68,19 @@ const ecoCard = [
     }, []);
   
     const loadCommandes = async () => {
-      const result = await axios.get("http://localhost:8080/commande");
+      const result = await axios.get("http://localhost:8080/authentication-management/users/all");
       setCommandes(result.data);
     };
   
     const deleteCommande = async (id) => {
-      await axios.delete(`http://localhost:8080/commande/${id}`);
+      await axios.delete(`http://localhost:8080/authentication-management/users/all/${id}`);
       loadCommandes();
     };
    
   return (
     <DashboardCard title="Plats"> 
     <Grid container spacing={3}>
-    {ecoCard.map((product, index) => (
+    {commandes.map((product, index) => (
         <Grid item sm={12} md={4} lg={3} key={index}>
             <BlankCard>
                 <Typography component={Link}  to="/">

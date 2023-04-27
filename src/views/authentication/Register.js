@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { useNavigate } from "react-router-dom";
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -25,19 +25,23 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const handleSubmit = async (e) => {
+  let navigate = useNavigate();
+  const [user, setUser] = useState({
+    username: '',
+    password: '',
+    authority: '',
+    
+  });
+  const {  username, password ,authority} = user;
+
+  const onInputChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('/api/register', { username, email, password });
-      console.log(response);
-      // rediriger vers la page de connexion ou afficher un message de succès
-    } catch (error) {
-      setErrorMessage(error.response.data.message);
-    }
+    await axios.post("http://localhost:8080/authentication-management/register", user);
+    navigate("/auth/login");
   };
 
   return (
@@ -58,7 +62,8 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          
+          <Box component="form" noValidate  sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} >
                 <TextField
@@ -69,21 +74,11 @@ export default function SignUp() {
                   id="username"
                   label="username"
                   autoFocus
-                  value={username} onChange={(e) => setUsername(e.target.value)}
+                  value={username} 
+                  onChange={(e) => onInputChange(e)}
                 />
               </Grid>
-            
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  value={email} onChange={(e) => setEmail(e.target.value)} 
-                />
-              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -93,7 +88,21 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  value={password} onChange={(e) => setPassword(e.target.value)}
+                  value={password} 
+                  onChange={(e) => onInputChange(e)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="authority"
+                  label="authority"
+                  type="authority"
+                  id="authority"
+                  
+                  value={authority} 
+                  onChange={(e) => onInputChange(e)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -108,6 +117,7 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={onSubmit}
             >
               Sign Up
             </Button>
@@ -119,6 +129,7 @@ export default function SignUp() {
               </Grid>
             </Grid>
           </Box>
+         
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>

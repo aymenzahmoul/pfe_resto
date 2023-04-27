@@ -1,40 +1,30 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
 const MenuForm = ({ addCategory }) => {
-  const [name, setName] = useState('');
-  const [image, setImage] = useState('');
+  const { id } = useParams();
+  
+  const [category, setCategory] = useState({ name: '', image: null , restaurantId:'1' });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Convertir la imagen en base64
-    const reader = new FileReader();
-    reader.readAsDataURL(image);
-    reader.onload = () => {
-      const imageData = reader.result;
-
-      // Enviar lYYa imagen en base64 al backend
-      const data = {
-        name: name,
-        image: imageData,
-      };
-      axios.post('http://localhost:8080/public-resources/categories', data)
-      const category = { name, image };
-
-  addCategory(category);
-  setName("");
-  setImage(null)
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-    reader.onerror = () => {
-      console.log('Error');
-    };
+  const handleInputChange = event => {
+    const { name, value } = event.target;
+    setCategory(prevCategory => ({ ...prevCategory, [name]: value }));
   };
+  const handleSubmit = event => {
+    event.preventDefault();
+    axios.post('http://localhost:8080/category-configuration/category/create',category)
+      .then(response => {
+        console.log(response.data);
+        const newCategory = response.data;
+        addCategory(newCategory);
+        setCategory({ name: '', image: null });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  
 
   return (
     <div className="card">
@@ -48,8 +38,8 @@ const MenuForm = ({ addCategory }) => {
               className="form-control"
               id="name"
               name="name"
-              value={name} onChange={(e) => setName(e.target.value)} 
-              
+              value={category.name}
+              onChange={handleInputChange}
             />
           </div>
           <div className="form-group">
@@ -59,18 +49,17 @@ const MenuForm = ({ addCategory }) => {
               className="form-control-file"
               id="image"
               accept="image/*"
-              onChange={(e) => setImage(e.target.files[0])}
-              
-        />
+              onChange={event => setCategory({ ...category, image: event.target.files[0] })}
+            />
+          </div>
+          <div> -------------------------------------------</div>
+          <button type="submit" className="btn btn-primary">
+            Ajouter
+          </button>
+        </form>
       </div>
-      <div> -------------------------------------------</div>
-      <button type="submit" className="btn btn-primary" >
-        Ajouter
-      </button>
-    </form>
-  </div>
-</div>
-);
+    </div>
+  );
 };
 
 export default MenuForm;

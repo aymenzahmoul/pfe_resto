@@ -27,7 +27,7 @@ const MenuItemForm = ({ addItem }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, price, desc, category_id } = meal;
-    await axios.post('http://localhost:8080/meal-configuration/plats', { name, price, desc, category_id });
+    await axios.post('http://localhost:8080/meal-configuration/meal/create', { name, price, desc, category_id });
     setMeal({ ...meal, name: '', price: '', desc: '', category_id: '' });
     const item = { name, price, desc };
     addItem(item);

@@ -13,8 +13,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import {  useNavigate } from "react-router-dom";
 function Copyright(props) {
-
+ 
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
 
@@ -25,13 +26,39 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await axios.post('http://localhost:8080/authentication-management/login', { username, password });
-    localStorage.setItem('token', response.data.token);
-  };
+  let navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  
+  function handleUsernameChange(event) {
+    setUsername(event.target.value);
+  }
+  
+  function handlePasswordChange(event) {
+    setPassword(event.target.value);
+  }
+  
+  function handleErrorMessage(error) {
+    setErrorMsg(error);
+  }
+  
+  function handleSubmit(event) {
+    event.preventDefault();
+  
+    axios.post("http://localhost:8080/authentication-management/login", {
+      username: username,
+      password: password
+    })
+    navigate("/")
+    
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(error => {
+      handleErrorMessage(error.response.data.message);
+    });
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -67,18 +94,18 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box component="form" noValidate  sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="username"
+                label="username Address"
+                name="username"
+                autoComplete="username"
                 autoFocus
                 value={username} 
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={handleUsernameChange}
               />
               <TextField
                 margin="normal"
@@ -90,7 +117,7 @@ export default function SignInSide() {
                 id="password"
                 autoComplete="current-password"
                 value={password} 
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handlePasswordChange}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -98,12 +125,15 @@ export default function SignInSide() {
               />
               <Button
                 type="submit"
+                onClick={handleSubmit}
+
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
                 Sign In
               </Button>
+              {errorMsg && <p>{errorMsg}</p>}
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
