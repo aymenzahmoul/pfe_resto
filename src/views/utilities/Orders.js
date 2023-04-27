@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from "axios";
 import  { useEffect,useState } from "react";
-import {  useParams } from "react-router-dom";
+
 import {
     Typography, Box,
     Table,
@@ -22,23 +22,17 @@ import Form from 'react-bootstrap/Form';
 
  
   export default function Orders() {
-    const [commandes, setCommandes] = useState([]);
-
-    const { id } = useParams();
-  
-    useEffect(() => {
+    const [command, setCommand] = useState([]);
+   useEffect(() => {
       loadCommandes();
     }, []);
   
     const loadCommandes = async () => {
-      const result = await axios.get("http://localhost:8080/commande");
-      setCommandes(result.data);
+      const result = await axios.get('http://localhost:8080/commande-resources/command/all');
+      setCommand(result.data);
     };
   
-    const deleteCommande = async (id) => {
-      await axios.delete(`http://localhost:8080/commande/${id}`);
-      loadCommandes();
-    };
+    
   return (<>
     <Card sx={{ maxWidth: 345 }}>
     
@@ -133,14 +127,14 @@ import Form from 'react-bootstrap/Form';
                     </TableCell>
                     <TableCell align="right">
                         <Typography variant="subtitle2" fontWeight={600}>
-                            date
+                        paymentMethod
                         </Typography>
                     </TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
-                {commandes.map((product) => (
-                    <TableRow key={product.name}>
+                {command.map((product) => (
+                    <TableRow key={product.address}>
                         <TableCell>
                             <Typography
                                 sx={{
@@ -148,7 +142,7 @@ import Form from 'react-bootstrap/Form';
                                     fontWeight: "500",
                                 }}
                             >
-                                {product.id}
+                                {product.userId}
                             </Typography>
                         </TableCell>
                         <TableCell>
@@ -160,7 +154,7 @@ import Form from 'react-bootstrap/Form';
                             >
                                 <Box>
                                     <Typography variant="subtitle2" fontWeight={600}>
-                                        {product.name}
+                                        {product.address}
                                     </Typography>
                                     <Typography
                                         color="textSecondary"
@@ -168,14 +162,14 @@ import Form from 'react-bootstrap/Form';
                                             fontSize: "13px",
                                         }}
                                     >
-                                        {product.post}
+                                        {product.nom}
                                     </Typography>
                                 </Box>
                             </Box>
                         </TableCell>
                         <TableCell>
                             <Typography color="textSecondary" variant="subtitle2" fontWeight={400}>
-                                {product.pname}
+                                {product.description}
                             </Typography>
                         </TableCell>
                         <TableCell>
@@ -186,11 +180,14 @@ import Form from 'react-bootstrap/Form';
                                     color: "#fff",
                                 }}
                                 size="small"
-                                label={product.priority}
+                                label={product.commandeStatus}
                             ></Chip>
                         </TableCell>
                         <TableCell align="right">
-                            <Typography variant="h6">${product.budget}k</Typography>
+                            <Typography variant="h6">${product.total}k</Typography>
+                        </TableCell>
+                        <TableCell align="right">
+                            <Typography variant="h6">{product.paymentMethod}</Typography>
                         </TableCell>
                     </TableRow>
                 ))}

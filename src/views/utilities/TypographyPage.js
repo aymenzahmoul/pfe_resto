@@ -51,12 +51,12 @@ const bull = (
     }, []);
   
     const loadUsers = async () => {
-      const result = await axios.get("http://localhost:8080/authentication-management/users/all");
+      const result = await axios.get("http://localhost:8080/authentication-management/user/all");
       setUsers(result.data);
     };
   
     const deleteUser = async (id) => {
-      await axios.delete(`http://localhost:8080/authentication-management/users/all/${id}`);
+      await axios.delete(`http://localhost:8080/authentication-management/user/all/${id}`);
       loadUsers();
     };
     const [age, setAge] = React.useState('');

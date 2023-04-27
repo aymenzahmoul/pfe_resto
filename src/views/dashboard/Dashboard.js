@@ -9,8 +9,6 @@ import RecentTransactions from './components/RecentTransactions';
 import ProductPerformance from './components/ProductPerformance';
 import Blog from './components/Blog';
 import MonthlyEarnings from './components/MonthlyEarnings';
-
-
 const Dashboard = () => {
   return (
     <PageContainer title="Dashboard" description="this is Dashboard">

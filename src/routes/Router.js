@@ -21,16 +21,17 @@ const Error = Loadable(lazy(() => import('../views/authentication/Error')));
 const Register = Loadable(lazy(() => import('../views/authentication/Register')));
 const Login = Loadable(lazy(() => import('../views/authentication/Login')));
 const Category = Loadable(lazy(() => import('../views/category/Category')));
+const Chatting = Loadable(lazy(() => import('../chating/Chatting')));
 const Router = [
   {
     path: '/',
     element: <FullLayout />,
     children: [
-      { path: '/', element: <Navigate to="/dashboard" /> },
-      { path: '/dashboard', exact: true, element: <Dashboard /> },
+     
+      { path: '/', exact: true, element: <Dashboard /> },
       { path: '/sample-page', exact: true, element: <SamplePage /> },
       { path: '/profil', exact: true, element: <Profil /> },
-     { path: '/ui/typography', exact: true, element: <TypographyPage /> },
+      { path: '/ui/typography', exact: true, element: <TypographyPage /> },
       { path: '/produits', exact: true, element: <Produits /> },
       { path: '/addProduct', exact: true, element: <AddProduct /> },
       { path: '/addCouriers', exact: true, element: <AddCouriers /> },
@@ -38,7 +39,7 @@ const Router = [
       { path: '/category', exact: true, element: <Category /> },
       { path: '/stores', exact: true, element: <Stores /> },
       { path: '/couriers', exact: true, element: <Couriers /> },
-     
+      { path: '/chatting', exact: true, element: <Chatting /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },

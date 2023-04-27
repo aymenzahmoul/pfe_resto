@@ -13,29 +13,34 @@ import {
 } from '@mui/material';
 import DashboardCard from '../../components/shared/DashboardCard';
 
-import { MDBAccordion, MDBAccordionItem, MDBIcon } from 'mdb-react-ui-kit';
-import { MDBBadge, MDBBtn, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
+import { MDBAccordion, MDBAccordionItem } from 'mdb-react-ui-kit';
+import {  MDBTable } from 'mdb-react-ui-kit';
 import { IconPencil } from '@tabler/icons';
  
-  export default function Category() {
-    const [commandes, setCommandes] = useState([]);
+ function Category() {
+    const [cat, setCat] = useState([]);
+  const [meat, setMeat] = useState([]);
+  const { id } = useParams();
 
-    const { id } = useParams();
-  
-    useEffect(() => {
-      loadCommandes();
-    }, []);
-  
-    const loadCommandes = async () => {
-      const result = await axios.get("http://localhost:8080/commande");
-      setCommandes(result.data);
-    };
-  
-    const deleteCommande = async (id) => {
-      await axios.delete(`http://localhost:8080/commande/${id}`);
-      loadCommandes();
-    };
+  useEffect(() => {
+    loadCat();
+    loadMeat();
+  }, [id]);
 
+  const loadMeat = async () => {
+    const result = await axios.get(`http://localhost:8080/meal-configuration/byCategory/${id}`);
+    setMeat(result.data);
+  };
+
+  const loadCat = async () => {
+    const result = await axios.get("http://localhost:8080/category-configuration/category/all");
+    setCat(result.data);
+  };
+
+  const deleteCommande = async (id) => {
+    await axios.delete(`http://localhost:8080/category-configuration/category/delete/${id}`);
+    loadCat();
+  };
     const items = [
         {
             label: 'Add',
@@ -80,11 +85,11 @@ import { IconPencil } from '@tabler/icons';
                 </TableRow>
             </TableHead>
             <TableBody>
-                {items.map((product) => (
+                {cat.map((product) => (
                     <TableRow key={product.name}>
                         <TableCell>
                         <MDBAccordion initialActive={items.length}>
-                        <MDBAccordionItem collapseId={items.length} headerTitle= {product.label}>
+                        <MDBAccordionItem collapseId={items.length} headerTitle= {product.name}>
       <MDBTable align='middle'>
    
       
@@ -126,7 +131,7 @@ import { IconPencil } from '@tabler/icons';
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {commandes.map((product) => (
+                        {meat.map((product) => (
                             <TableRow key={product.name}>
                                 <TableCell>
                                     <Typography
@@ -155,7 +160,7 @@ import { IconPencil } from '@tabler/icons';
                                                     fontSize: "13px",
                                                 }}
                                             >
-                                                {product.post}
+                                                {product.desc}
                                             </Typography>
                                         </Box>
                                     </Box>
@@ -184,7 +189,7 @@ import { IconPencil } from '@tabler/icons';
                     </TableBody>
                 </Table>
             </Box>
-   &a
+
     </MDBTable>
       </MDBAccordionItem>
      
@@ -200,7 +205,7 @@ import { IconPencil } from '@tabler/icons';
                             >
                                 <Box>
                                     <Typography variant="subtitle2" fontWeight={600}>
-                                        {product.name}
+                                        
                                     </Typography>
                                     <Typography
                                         color="textSecondary"
@@ -227,3 +232,4 @@ import { IconPencil } from '@tabler/icons';
 </>
   );
 };
+export default Category ;

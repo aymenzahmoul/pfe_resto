@@ -63,22 +63,22 @@ const products = [
 
  
   export default function Stores() {
-    const [commandes, setCommandes] = useState([]);
+    const [restaurants, setRestaurants] = useState([]);
 
     const { id } = useParams();
   
     useEffect(() => {
-      loadCommandes();
+        loadRestaurants();
     }, []);
   
-    const loadCommandes = async () => {
-      const result = await axios.get("http://localhost:8080/commande");
-      setCommandes(result.data);
+    const loadRestaurants = async () => {
+      const result = await axios.get("http://localhost:8080/restaurant-configuration/restaurants/all");
+      setRestaurants(result.data);
     };
   
-    const deleteCommande = async (id) => {
-      await axios.delete(`http://localhost:8080/commande/${id}`);
-      loadCommandes();
+    const deleteRestaurants = async (id) => {
+      await axios.delete(`http://localhost:8080/restaurant-configuration/restaurants/${id}`);
+      loadRestaurants();
     };
   return (
     
@@ -132,7 +132,7 @@ const products = [
                     </TableCell>
                     <TableCell>
                         <Typography variant="subtitle2" fontWeight={600}>
-                            Phone
+                            logo
                         </Typography>
                     </TableCell>
                     <TableCell align="right">
@@ -148,7 +148,7 @@ const products = [
                 </TableRow>
             </TableHead>
             <TableBody>
-                {commandes.map((product) => (
+                {restaurants.map((product) => (
                     <TableRow key={product.name}>
                         <TableCell>
                             <Typography
@@ -177,14 +177,14 @@ const products = [
                                             fontSize: "13px",
                                         }}
                                     >
-                                        {product.post}
+                                        {product.address}
                                     </Typography>
                                 </Box>
                             </Box>
                         </TableCell>
                         <TableCell>
                             <Typography color="textSecondary" variant="subtitle2" fontWeight={400}>
-                                {product.pname}
+                                {product.log}
                             </Typography>
                         </TableCell>
                         <TableCell>
@@ -195,7 +195,7 @@ const products = [
                                     color: "#fff",
                                 }}
                                 size="small"
-                                label={product.priority}
+                                label={product.log}
                             ></Chip>
                         </TableCell>
                         <TableCell align="right">

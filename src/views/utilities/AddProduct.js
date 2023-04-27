@@ -2,120 +2,77 @@ import React from 'react';
 import axios from "axios";
 import  { useEffect,useState } from "react";
 import {  useParams } from "react-router-dom";
-import DashboardCard from 'src/components/shared/DashboardCard';
-import Box from '@mui/material/Box';
-import { Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
-import defaultLogo from '../../assets/images/logos/2525.jpg';
-
-import { IconArrowLeft } from '@tabler/icons';
-
+import "./newUser.css";
   export default function AddProduct() {
-    const [commandes, setCommandes] = useState([]);
+    const [restaurant, setRestaurant] = useState({
+      name: "",
+      address: "",
+      log: "",
+    });
 
     const { id } = useParams();
   
     useEffect(() => {
-      loadCommandes();
+      loadRestaurant();
     }, []);
   
-    const loadCommandes = async () => {
-      const result = await axios.get("http://localhost:8080/commande");
-      setCommandes(result.data);
+    const loadRestaurant = async () => {
+      const result = await axios.get("http://localhost:8080/restaurant-configuration/restaurant/create");
+      setRestaurant(result.data);
     };
   
-    const deleteCommande = async (id) => {
-      await axios.delete(`http://localhost:8080/commande/${id}`);
-      loadCommandes();
+    const deleteRestaurant = async (id) => {
+      await axios.delete(`http://localhost:8080/restaurant-configuration/restaurant/create/${id}`);
+      loadRestaurant();
     };
-    const [name, setName] = useState("Nom du Restaurant");
-  const [logo, setLogo] = useState(defaultLogo); 
-  const [theme, setTheme] = useState("light");
-
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  }
-
-  const handleLogoChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setLogo(reader.result);
-    }
-    reader.readAsDataURL(file);
-  }
-
-  const handleThemeChange = (event) => {
-    setTheme(event.target.value);
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // save changes to backend
-  }
   return (
-    <DashboardCard title="Produits / Create">
-  <Button variant="outlined" href="produits" startIcon={<IconArrowLeft />}>
-  <IconArrowLeft /> Create product
-      </Button>
-    <br></br>
-    <Box>
-    <Form noValidate onSubmit={handleSubmit}>
-    <Form.Group as={Col} md="4" controlId="validationCustom01">
-          <Form.Label> </Form.Label>
-          <Form.Control
-            required
-            type="file"
-        
-          />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-        </Form.Group>
-      <Row className="mb-3">
-        
-        <Form.Group as={Col} md="4" controlId="validationCustom01">
-          <Form.Label> name</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder=" name"
-           
-          />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-        </Form.Group>
-      
-        <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-          <Form.Label>prix</Form.Label>
-          <InputGroup hasValidation>
-            
-            <Form.Control
-              type="number"
-              placeholder="prix"
-              aria-describedby="inputGroupPrepend"
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-             
-            </Form.Control.Feedback>
-          </InputGroup>
-        </Form.Group>
-      </Row>
-      <Row className="mb-3">
-        <Form.Group as={Col} md="6" controlId="validationCustom03">
-          <Form.Label>des</Form.Label>
-          <Form.Control type="text" placeholder="des" required />
-          <Form.Control.Feedback type="invalid">
-            Please provide a valid city.
-          </Form.Control.Feedback>
-        </Form.Group>
-   
-      </Row>
-      <Form.Group className="mb-3">
-    
-      </Form.Group>
-      <Button type="submit">Submit form</Button>
-    </Form>
- 
-    </Box>
-
-</DashboardCard>
+<div className="newUser">
+      <h1 className="newUserTitle">New restaurant</h1>
+      <form className="newUserForm">
+        <div className="newUserItem">
+          <label>Username</label>
+          <input type="text" placeholder="john" />
+        </div>
+        <div className="newUserItem">
+          <label>Full Name</label>
+          <input type="text"  />
+        </div>
+        <div className="newUserItem">
+          <label>Email</label>
+          <input type="email" />
+        </div>
+        <div className="newUserItem">
+          <label>Password</label>
+          <input type="password" placeholder="password" />
+        </div>
+        <div className="newUserItem">
+          <label>Phone</label>
+          <input type="text"  />
+        </div>
+        <div className="newUserItem">
+          <label>Address</label>
+          <input type="text" />
+        </div>
+        <div className="newUserItem">
+          <label>Gender</label>
+          <div className="newUserGender">
+            <input type="radio" name="gender" id="male" value="male" />
+            <label for="male">Male</label>
+            <input type="radio" name="gender" id="female" value="female" />
+            <label for="female">Female</label>
+            <input type="radio" name="gender" id="other" value="other" />
+            <label for="other">Other</label>
+          </div>
+        </div>
+        <div className="newUserItem">
+          <label>Active</label>
+          <select className="newUserSelect" name="active" id="active">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <button className="newUserButton">Create</button>
+      </form>
+    </div>
   );
 };

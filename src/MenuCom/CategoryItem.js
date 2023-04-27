@@ -24,7 +24,6 @@ const ImagePreview = ({ image }) => {
     );
   };
 
-
 const CategoryItem = ({ index, category, deleteCategory }) => {
 const [items, setItems] = useState([]);
 
@@ -42,9 +41,6 @@ return (
 <div className="card mb-3">
 <div className="card-body">
 <h5 className="card-title">{category.name} <ImagePreview image={category.image} /></h5>
-
-
-
 <button className="btn btn-danger" onClick={() => deleteCategory(index)}>
 Delete
 </button>

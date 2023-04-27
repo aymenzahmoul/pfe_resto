@@ -1,30 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 
 const MenuForm = ({ addCategory }) => {
-  const { id } = useParams();
-  
-  const [category, setCategory] = useState({ name: '', image: null , restaurantId:'1' });
+  const [category, setCategory] = useState({ name: '', image: null, restaurantId: null });
 
-  const handleInputChange = event => {
-    const { name, value } = event.target;
-    setCategory(prevCategory => ({ ...prevCategory, [name]: value }));
-  };
+  useEffect(() => {
+    // retrieve restaurant ID from API endpoint
+    axios.get('http://localhost:8080/restaurant-configuration/restaurant/getRestaurantIdByUserId/1', { withCredentials: true })
+      .then(response => {
+        setCategory(prevCategory => ({ ...prevCategory, restaurantId: response.data.restaurantId }));
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []); // only run on component mount
+
   const handleSubmit = event => {
     event.preventDefault();
-    axios.post('http://localhost:8080/category-configuration/category/create',category)
+
+    const formData = new FormData();
+    formData.append('name', category.name);
+    formData.append('image', category.image);
+    formData.append('restaurantId', category.restaurantId);
+
+    axios.post('http://localhost:8080/category-configuration/category/create', formData)
       .then(response => {
         console.log(response.data);
         const newCategory = response.data;
         addCategory(newCategory);
-        setCategory({ name: '', image: null });
+        setCategory({ name: '', image: null, restaurantId: category.restaurantId });
       })
       .catch(error => {
         console.log(error);
       });
   };
-  
+
+  const handleInputChange = event => {
+    const { name, value } = event.target;
+    setCategory(prevCategory => ({ ...prevCategory, [name]: value }));
+  };
+
+  const handleImageChange = event => {
+    setCategory(prevCategory => ({ ...prevCategory, image: event.target.files[0] }));
+  };
 
   return (
     <div className="card">
@@ -49,7 +67,7 @@ const MenuForm = ({ addCategory }) => {
               className="form-control-file"
               id="image"
               accept="image/*"
-              onChange={event => setCategory({ ...category, image: event.target.files[0] })}
+              onChange={handleImageChange}
             />
           </div>
           <div> -------------------------------------------</div>
@@ -59,7 +77,7 @@ const MenuForm = ({ addCategory }) => {
         </form>
       </div>
     </div>
-  );
+);
 };
 
 export default MenuForm;

@@ -1,5 +1,5 @@
 import {
-  IconDevices, IconCommand, IconLayoutDashboard, IconLogin, IconMoodHappy, IconUsers, IconUserPlus ,IconBuildingStore,IconShoppingCartPlus,IconMoped
+  IconDevices, IconCommand, IconLayoutDashboard, IconLogin, IconMoodHappy, IconUsers, IconUserPlus ,IconBuildingStore,IconShoppingCartPlus,IconMoped, IconBrandMeta
 } from '@tabler/icons';
 
 
@@ -82,6 +82,12 @@ const Menuitems = [
     title: 'Profil',
     icon: IconMoodHappy,
     href: '/profil',
+  },
+  {
+    id: uniqueId(),
+    title: 'chatting',
+    icon: IconBrandMeta,
+    href: '/chatting',
   },
   {
     id: uniqueId(),

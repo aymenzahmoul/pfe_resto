@@ -12,17 +12,9 @@ import img2 from 'src/assets/images/products/s5.jpg';
 import img3 from 'src/assets/images/products/s7.jpg';
 import img4 from 'src/assets/images/products/s11.jpg';
 import { Stack } from '@mui/system';
-import { IconBasket, IconSquarePlus } from '@tabler/icons';
+import { IconBasket } from '@tabler/icons';
 import BlankCard from '../../components/shared/BlankCard';
 import DashboardCard from '../../components/shared/DashboardCard';
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-
-import SearchIcon from '@mui/icons-material/Search';
-
-import Button from '@mui/material/Button';
 const ecoCard = [
     {
         title: 'Boat Headphone',
@@ -80,7 +72,7 @@ const ecoCard = [
   return (
     <DashboardCard title="Plats"> 
     <Grid container spacing={3}>
-    {commandes.map((product, index) => (
+    {ecoCard.map((product, index) => (
         <Grid item sm={12} md={4} lg={3} key={index}>
             <BlankCard>
                 <Typography component={Link}  to="/">
