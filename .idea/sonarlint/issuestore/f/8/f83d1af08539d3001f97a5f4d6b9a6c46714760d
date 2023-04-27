@@ -7,8 +7,6 @@ Hjavascript:S1128"'Remove this unused import of 'Divider'.(èŠñÌúÿÿÿÿ
 Fjavascript:S1128"*Remove this unused import of 'IconButton'.(Òş†ë
 Fjavascript:S1128"*Remove this unused import of 'SearchIcon'.(½©„ô
 Gjavascript:S1128"&Remove this unused import of 'Button'.(ĞÁíÂıÿÿÿÿ
-Vjavascript:S1481>":Remove the declaration of the unused 'commandes' variable.(‰£Šà
-Sjavascript:S1854>"7Remove this useless assignment to variable "commandes".(‰£Šà
 Tjavascript:S1481@"3Remove the declaration of the unused 'id' variable.(í±‘…úÿÿÿÿ
 Qjavascript:S1854@"0Remove this useless assignment to variable "id".(í±‘…úÿÿÿÿ
 `javascript:S1481K"?Remove the declaration of the unused 'deleteCommande' variable.(ü¶Çÿÿÿÿÿ
