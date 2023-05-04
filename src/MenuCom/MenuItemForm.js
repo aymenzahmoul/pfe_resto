@@ -7,8 +7,7 @@ const MenuItemForm = ({ addItem }) => {
     name: '',
     price: '',
     desc: '',
-    category_id: '',
-    category: []
+    
   });
 
   useEffect(() => {

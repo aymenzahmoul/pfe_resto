@@ -199,7 +199,7 @@ const products = [
                             ></Chip>
                         </TableCell>
                         <TableCell align="right">
-                            <Typography variant="h6">${product.budget}k</Typography>
+                            <Typography variant="h6">{product.budget}</Typography>
                         </TableCell>
                     </TableRow>
                 ))}

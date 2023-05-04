@@ -31,7 +31,7 @@ import "./newUser.css";
       <form className="newUserForm">
         <div className="newUserItem">
           <label>Username</label>
-          <input type="text" placeholder="john" />
+          <input type="text" />
         </div>
         <div className="newUserItem">
           <label>Full Name</label>
