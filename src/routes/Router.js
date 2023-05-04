@@ -29,6 +29,7 @@ const Router = [
     children: [
      
       { path: '/', exact: true, element: <Dashboard /> },
+      { path: '/dashboard', exact: true, element: <Dashboard /> },
       { path: '/sample-page', exact: true, element: <SamplePage /> },
       { path: '/profil', exact: true, element: <Profil /> },
       { path: '/ui/typography', exact: true, element: <TypographyPage /> },
