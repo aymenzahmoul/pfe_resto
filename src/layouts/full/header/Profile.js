@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Avatar,
@@ -12,9 +12,10 @@ import {
   ListItemText
 } from '@mui/material';
 
-import { IconListCheck, IconMail, IconUser } from '@tabler/icons';
+import { IconUser } from '@tabler/icons';
 
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
+import axios from 'axios';
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -24,7 +25,20 @@ const Profile = () => {
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
-
+  const [restaurant, setRestaurant] = useState([])
+  useEffect(() => {
+      axios.get('http://localhost:8080/restaurant-configuration/restaurant/getRestaurantById/1')
+        .then(response => {
+          setRestaurant(response.data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }, []);
+  
+    const convertImage = (base64Image) => {
+      return base64Image;
+    };
   return (
     <Box>
       <IconButton
@@ -41,7 +55,7 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src={ProfileImg}
+          src={convertImage(restaurant.log)}
           alt={ProfileImg}
           sx={{
             width: 35,

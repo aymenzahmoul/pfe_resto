@@ -2,7 +2,7 @@ import React from 'react';
 
 import axios from "axios";
 import  { useEffect,useState } from "react";
-import {  useParams } from "react-router-dom";
+
 import {
     Typography, Box,
     Table,
@@ -13,59 +13,20 @@ import {
     Chip
 } from '@mui/material';
 import DashboardCard from '../../components/shared/DashboardCard';
-import { IconBasket, IconSquarePlus } from '@tabler/icons';
-import BlankCard from '../../components/shared/BlankCard';
+import {  IconSquarePlus } from '@tabler/icons';
+
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
-import Divider from '@mui/material/Divider';
+
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import { Stack } from '@mui/system';
-const products = [
-    {
-        id: "1",
-        name: "Sunil Joshi",
-        post: "Web Designer",
-        pname: "Elite Admin",
-        priority: "Low",
-        pbg: "primary.main",
-        budget: "3.9",
-    },
-    {
-        id: "2",
-        name: "Andrew McDownland",
-        post: "Project Manager",
-        pname: "Real Homes WP Theme",
-        priority: "Medium",
-        pbg: "secondary.main",
-        budget: "24.5",
-    },
-    {
-        id: "3",
-        name: "Christopher Jamil",
-        post: "Project Manager",
-        pname: "MedicalPro WP Theme",
-        priority: "High",
-        pbg: "error.main",
-        budget: "12.8",
-    },
-    {
-        id: "4",
-        name: "Nirav Joshi",
-        post: "Frontend Engineer",
-        pname: "Hosting Press HTML",
-        priority: "Critical",
-        pbg: "success.main",
-        budget: "2.4",
-    },
-];
 
- 
   export default function Stores() {
     const [restaurants, setRestaurants] = useState([]);
 
-    const { id } = useParams();
+ 
   
     useEffect(() => {
         loadRestaurants();
@@ -76,10 +37,7 @@ const products = [
       setRestaurants(result.data);
     };
   
-    const deleteRestaurants = async (id) => {
-      await axios.delete(`http://localhost:8080/restaurant-configuration/restaurants/${id}`);
-      loadRestaurants();
-    };
+   
   return (
     
     <DashboardCard title="Restaurant">

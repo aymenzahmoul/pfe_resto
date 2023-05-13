@@ -1,29 +1,63 @@
 import { EmojiEmotions, PermMedia, Room } from "@mui/icons-material";
 import "./share.css";
-import { Label } from "reactstrap";
 
+import react,{ useState } from "react";
+import axios from "axios";
+import Button from '@mui/material/Button';
+import { useNavigate } from "react-router";
 export default function Share() {
+  const [desc, setDesc] = useState('');
+  const [image, setImage] = useState('');
+  const [restaurantId, setRestaurantId] = useState('');
+  const[posts,setPosts]=useState({
+    desc:'',
+    image:'',
+    restaurantId:'',
+  });
+  let navigate = useNavigate();
+
+  const handleNameChange = (event) => {
+    setDesc(event.target.value);
+  };
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+
+    reader.readAsDataURL(file);
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = {
+      desc: desc,
+      image: image,
+      restaurantId:1,
+    };
+    axios.post('http://localhost:8080/post-configuration/post/createPost', data)
+    navigate("/");
+  };
+
+
   return (
+    <form  > 
     <div className="share">
       <div className="shareWrapper">
         <div className="shareTop">
           <img className="shareProfileImg" src="/assets/person/1.jpeg" alt="" />
-          <input
-            placeholder="What's in your mind Safak?"
-            className="shareInput"
-          />
+          <input   className="shareInput"id="desc" name="desc" value={desc} onChange={handleNameChange}/>
         </div>
         <hr className="shareHr"/>
         <div className="shareBottom">
             <div className="shareOptions">
-                <div className="shareOption">
+                <Button  component="label">
                     <PermMedia htmlColor="tomato" className="shareIcon"/>
-                    <span className="shareOptionText">Photo or Video</span>
-                </div>
-                <div className="shareOption">
-                    <Label htmlColor="blue" className="shareIcon"/>
-                    <span className="shareOptionText">Tag</span>
-                </div>
+                    <input type="file" hidden   id="image" onChange={handleImageChange}/>
+                    <span className="shareOptionText" color="black"> Photo or Video</span>
+                </Button>
+              
                 <div className="shareOption">
                     <Room htmlColor="green" className="shareIcon"/>
                     <span className="shareOptionText">Location</span>
@@ -33,9 +67,10 @@ export default function Share() {
                     <span className="shareOptionText">Feelings</span>
                 </div>
             </div>
-            <button className="shareButton">Share</button>
+            <button className="shareButton" onClick={handleSubmit}>Share</button>
         </div>
       </div>
     </div>
+    </form>
   );
 }

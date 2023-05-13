@@ -50,7 +50,7 @@ export default function SignInSide() {
       username: username,
       password: password
     })
-    navigate("/")
+   
     
     .then(response => {
       console.log(response.data);

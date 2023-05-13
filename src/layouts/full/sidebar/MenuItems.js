@@ -6,20 +6,13 @@ import {
 import { uniqueId } from 'lodash';
 
 const Menuitems = [
-  {
-    navlabel: true,
-    subheader: 'Home',
-  },
+
 
   {
     id: uniqueId(),
     title: 'Dashboard',
     icon: IconLayoutDashboard,
     href: '/dashboard',
-  },
-  {
-    navlabel: true,
-    subheader: 'Utilities',
   },
   {
     id: uniqueId(),
@@ -44,22 +37,12 @@ const Menuitems = [
     ,
     href: '/couriers',
   },
-  {
-    id: uniqueId(),
-    title: 'Stores',
-    icon: IconBuildingStore
-    ,
-    href: '/Stores',
-  },
+  
   {
     id: uniqueId(),
     title: 'plats',
     icon: IconCommand,
     href: '/produits',
-  },
-  {
-    navlabel: true,
-    subheader: 'Auth',
   },
   {
     id: uniqueId(),
@@ -73,16 +56,7 @@ const Menuitems = [
     icon: IconUserPlus,
     href: '/auth/register',
   },
-  {
-    navlabel: true,
-    subheader: 'Extra',
-  },
-  {
-    id: uniqueId(),
-    title: 'Profil',
-    icon: IconMoodHappy,
-    href: '/profil',
-  },
+
   {
     id: uniqueId(),
     title: 'chatting',
@@ -96,12 +70,7 @@ const Menuitems = [
     ,
     href: '/category',
   },
-  {
-    id: uniqueId(),
-    title: 'Menu',
-    icon: IconDevices,
-    href: '/sample-page',
-  },
+  
 ];
 
 export default Menuitems;

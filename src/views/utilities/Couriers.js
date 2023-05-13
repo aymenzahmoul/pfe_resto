@@ -1,8 +1,6 @@
 import React from 'react';
+import  { useState } from "react";
 
-import axios from "axios";
-import  { useEffect,useState } from "react";
-import {  useParams } from "react-router-dom";
 import {
     Typography, Box,
     Table,
@@ -10,7 +8,7 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    Chip
+  
 } from '@mui/material';
 
 import IconButton from '@mui/material/IconButton';
@@ -26,23 +24,10 @@ import {  IconSquarePlus } from '@tabler/icons';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
   export default function Couriers() {
+    // eslint-disable-next-line no-unused-vars
     const [couriers, setCouriers] = useState([]);
 
-    const { id } = useParams();
-  
-    useEffect(() => {
-      loadCouriers();
-    }, []);
-  
-    const loadCouriers = async () => {
-      const result = await axios.get("http://localhost:8080/courier");
-      setCouriers(result.data);
-    };
-  
-    const deleteUser = async (id) => {
-      await axios.delete(`http://localhost:8080/user/${id}`);
-      loadCouriers();
-    };
+   
   return (
     <DashboardCard title="Couriers">
          <Stack direction="row"  spacing={13}> 
